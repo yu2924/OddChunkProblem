@@ -11,7 +11,7 @@
 #include <filesystem>
 #include <fstream>
 
-// an simple RIFF writer implementation
+// a simple RIFF writer implementation
 namespace riffrw
 {
 

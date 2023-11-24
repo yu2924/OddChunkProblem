@@ -46,7 +46,7 @@ Then, The output then changes as follows:
 "IKEY"="IKEY: odd"
 -- metadata end --
 ```
-All four metadata can now be read out.
+Now all four metadata can be read.
 
 ## Written by
 
