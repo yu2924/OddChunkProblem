@@ -117,18 +117,18 @@ int main (int, char**)
 			writer.write(&wavfmt, sizeof(wavfmt));
 		}
 		{
-			RiffWriter::ScopedDescend sddata(writer, "data");
+			RiffWriter::ScopedDescend ckdata(writer, "data");
 			std::vector<float> pcmdata(44100);
 			for(size_t c = pcmdata.size(), i = 0; i < c; ++i) pcmdata[i] = std::sin(2.0f * juce::float_Pi * (float)i * 440.0f / 44100.0f) * 0.5f;
 			writer.write(pcmdata.data(), pcmdata.size() * 4);
 		}
 		{
-			RiffWriter::ScopedDescend sdlistinfo(writer, "LIST", "INFO");
+			RiffWriter::ScopedDescend ckLISTINFO(writer, "LIST", "INFO");
 			// NOTICE: the point at issue, if the size of the chunk is odd, the next chunk will not be visible
-			{ RiffWriter::ScopedDescend sdicmt(writer, "ICMT"); const char* pmeta = "ICMT: odd"; writer.write(pmeta, strlen(pmeta)); }
-			{ RiffWriter::ScopedDescend sdcmnt(writer, "CMNT"); const char* pmeta = "CMNT: odd"; writer.write(pmeta, strlen(pmeta)); }
-			{ RiffWriter::ScopedDescend sdcomm(writer, "COMM"); const char* pmeta = "COMM: odd"; writer.write(pmeta, strlen(pmeta)); }
-			{ RiffWriter::ScopedDescend sdikey(writer, "IKEY"); const char* pmeta = "IKEY: odd"; writer.write(pmeta, strlen(pmeta)); }
+			{ RiffWriter::ScopedDescend ckICMT(writer, "ICMT"); const char* pmeta = "ICMT: odd"; writer.write(pmeta, strlen(pmeta)); }
+			{ RiffWriter::ScopedDescend ckCMNT(writer, "CMNT"); const char* pmeta = "CMNT: odd"; writer.write(pmeta, strlen(pmeta)); }
+			{ RiffWriter::ScopedDescend ckCOMM(writer, "COMM"); const char* pmeta = "COMM: odd"; writer.write(pmeta, strlen(pmeta)); }
+			{ RiffWriter::ScopedDescend ckIKEY(writer, "IKEY"); const char* pmeta = "IKEY: odd"; writer.write(pmeta, strlen(pmeta)); }
 		}
 	}
 	// --------------------------------------------------------------------------------
