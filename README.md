@@ -16,6 +16,38 @@ Therefore, it is legal for the cksize field of a chunk header to have an odd val
 
 In my opinion, the ListInfoChunk::addToMetadata() [juce_WavAudioFormat.cpp:774] loop is missing a step to skip padding if infoLength is odd.
 
+Let's make it sure.  
+This code generates four odd-sized metadata and reads it with AudioFormatReader, and output as follows:
+```
+-- metadata begin --
+"ICMT"="ICMT: odd"
+"MetaDataSource"="WAV"
+-- metadata end --
+```
+The result is that only the first metadata can be read.  
+Now add changes to the ListInfoChunk::addToMetadata() method:
+```
+if (infoLength > 0)
+{
+    ...
+
+    // add this line to the end of the block
+    if(infoLength & 0x01) input.skipNextBytes(1);
+}
+
+```
+Then, The output then changes as follows:
+```
+-- metadata begin --
+"ICMT"="ICMT: odd"
+"CMNT"="CMNT: odd"
+"COMM"="COMM: odd"
+"MetaDataSource"="WAV"
+"IKEY"="IKEY: odd"
+-- metadata end --
+```
+All four metadata can now be read out.
+
 ## Written by
 
 [yu2924](https://twitter.com/yu2924)
